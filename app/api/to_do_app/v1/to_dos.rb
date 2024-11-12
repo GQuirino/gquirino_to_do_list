@@ -29,6 +29,19 @@ module ToDoApp
         get ":id" do
           @todo
         end
+
+        # POST api/v1/todos
+        desc "Create a new to-do", {
+          success: { code: :created, message: "Creates a new to-do item" }
+        }
+        params do
+          requires :title, type: String, desc: "Title of the to-do"
+          requires :description, type: String, desc: "Description of the to-do"
+          optional :status, type: String, values: %w[pending complete], default: "pending", desc: "Status of the to-do"
+        end
+        post do
+          ToDo.create!(declared(params))
+        end
       end
     end
   end

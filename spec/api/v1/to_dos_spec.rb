@@ -36,4 +36,32 @@ RSpec.describe 'Todo API', type: :request do
       end
     end
   end
+
+  describe 'POST /api/v1/todos' do
+    let(:params) { { title:, description:, status: } }
+
+    context 'with valid params' do
+      it 'creates a new item' do
+        post('/api/v1/todos', params:)
+        expect(response).to have_http_status(:created)
+        expect(json_response['title']).to eq(title)
+        expect(json_response['description']).to eq(description)
+        expect(json_response['status']).to eq(status.to_s)
+        expect do
+          post '/api/v1/todos', params:
+        end.to change(ToDo, :count).by(1)
+      end
+    end
+
+    context 'with missing params' do
+      params = { title: nil }
+      it 'returns a bad request error' do
+        post('/api/v1/todos', params:)
+        expect(response).to have_http_status(:bad_request)
+        expect do
+          post '/api/v1/todos', params:
+        end.not_to change(ToDo, :count)
+      end
+    end
+  end
 end
