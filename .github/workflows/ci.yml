@@ -1,14 +1,25 @@
 name: CI
 
 on:
-  pull_request:
   push:
     branches: [ main ]
 
 jobs:
-  scan_ruby:
+  tests:
+    name: Run Tests
     runs-on: ubuntu-latest
-
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/gquirino_to_do_list_test
+    services:
+      postgres:
+        image: postgres:latest
+        ports: [ "5432:5432" ]
+        env:
+          POSTGRES_DB: gquirino_to_do_list_test
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,21 +30,21 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpq-dev
+          bundle install
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+        run: |
+          bundle exec rake db:drop
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
-
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+        run: bundle exec rspec spec
