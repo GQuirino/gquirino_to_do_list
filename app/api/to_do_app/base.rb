@@ -1,5 +1,7 @@
 module ToDoApp
   class Base < Grape::API
+    require_relative "../helpers/to_do_helpers"
+
     format :json
     prefix :api
 
