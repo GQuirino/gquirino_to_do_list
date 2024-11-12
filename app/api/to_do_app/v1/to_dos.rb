@@ -15,8 +15,11 @@ module ToDoApp
           success: { code: :ok, message: "Returns all to-do items" },
           is_array: true
         }
+        params do
+          optional :filter_by, type: String, values: %w[pending completed], desc: "Filter items by"
+        end
         get do
-          ToDo.all
+          ::FilterService.new(ToDo.all, params[:filter_by]).call
         end
 
         # GET api/v1/todos/:id
