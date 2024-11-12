@@ -97,4 +97,20 @@ RSpec.describe 'Todo API', type: :request do
       end
     end
   end
+
+  describe 'DELETE /api/v1/todos/:id' do
+    context 'when the item exists' do
+      it 'deletes the item' do
+        delete "/api/v1/todos/#{to_do.id}"
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when the item does not exist' do
+      it 'returns a not found error' do
+        delete '/api/v1/todos/9999'
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

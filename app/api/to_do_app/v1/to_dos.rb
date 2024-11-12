@@ -57,6 +57,17 @@ module ToDoApp
           @todo.update!(declared(params, include_missing: false))
           @todo
         end
+
+        # DELETE api/v1/todos/:id
+        desc "Delete a to-do", {
+          success: { code: :no_content, message: "Deletes a to-do item" }
+        }
+        params do
+          requires :id, type: Integer, desc: "To-do id"
+        end
+        delete ":id" do
+          @todo.destroy
+        end
       end
     end
   end
