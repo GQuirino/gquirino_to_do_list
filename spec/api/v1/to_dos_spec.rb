@@ -64,4 +64,37 @@ RSpec.describe 'Todo API', type: :request do
       end
     end
   end
+
+  describe 'PUT /api/v1/todos/:id' do
+    context 'with valid params' do
+      let(:params) { { title: 'Updated Title', description: 'Updated Description' } }
+
+      it 'updates the item' do
+        put("/api/v1/todos/#{to_do.id}", params:)
+        expect(response).to have_http_status(:ok)
+        expect(json_response['title']).to eq('Updated Title')
+        expect(json_response['description']).to eq('Updated Description')
+
+        to_do.reload
+
+        expect(to_do.title).to eq('Updated Title')
+        expect(to_do.description).to eq('Updated Description')
+      end
+    end
+
+    context 'with invalid params' do
+      it 'returns a bad request error' do
+        put "/api/v1/todos/#{to_do.id}", params: { title: nil, description: nil }
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+    end
+
+    context 'with invalid id' do
+      let(:params) { { title: 'Updated Title', description: 'Updated Description' } }
+      it 'returns a not found error' do
+        put("/api/v1/todos/9999", params:)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

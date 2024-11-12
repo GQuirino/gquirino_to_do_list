@@ -42,6 +42,21 @@ module ToDoApp
         post do
           ToDo.create!(declared(params))
         end
+
+        # PUT api/v1/todos/:id
+        desc "Update a to-do", {
+          success: { code: 200, message: "Updates a to-do item" }
+        }
+        params do
+          requires :id, type: Integer, desc: "to-do id"
+          optional :title, type: String, desc: "Title of the to-do"
+          optional :description, type: String, desc: "Description of the to-do"
+          optional :status, type: String, values: %w[pending complete], desc: "Status of the to-do"
+        end
+        put ":id" do
+          @todo.update!(declared(params, include_missing: false))
+          @todo
+        end
       end
     end
   end
