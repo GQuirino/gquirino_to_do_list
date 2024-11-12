@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV["DB_HOST"] %>
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
+
+development:
+  <<: *default
+  database: gquirino_to_do_list_development
+test:
+  <<: *default
+  database: gquirino_to_do_list_test
+production:
+  <<: *default
+  database: gquirino_to_do_list_production
+  username: gquirino_to_do_list
