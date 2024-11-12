@@ -113,4 +113,23 @@ RSpec.describe 'Todo API', type: :request do
       end
     end
   end
+
+  describe 'PATCH /api/v1/todos/:id/complete' do
+    context 'when the item exists' do
+      it 'updates the item status' do
+        patch "/api/v1/todos/#{to_do.id}/complete"
+        expect(response).to have_http_status(:ok)
+        expect(json_response['status']).to eq(::ToDo::AVAILABLE_STATUS[:completed])
+        to_do.reload
+        expect(to_do.status).to eq(::ToDo::AVAILABLE_STATUS[:completed])
+      end
+    end
+
+    context 'when the item does not exist' do
+      it 'returns a not found error' do
+        delete '/api/v1/todos/9999'
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

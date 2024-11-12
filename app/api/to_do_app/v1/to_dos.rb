@@ -68,6 +68,18 @@ module ToDoApp
         delete ":id" do
           @todo.destroy
         end
+
+        # PATCH api/v1/todos/:id/complete
+        desc "Complete a to-do", {
+          success: { code: :ok, message: "Marks a to-do item as completed" }
+        }
+        params do
+          requires :id, type: Integer, desc: "To-do id"
+        end
+        patch ":id/complete" do
+          @todo.completed!
+          @todo
+        end
       end
     end
   end
