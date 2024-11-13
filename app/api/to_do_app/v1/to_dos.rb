@@ -5,7 +5,7 @@ module ToDoApp
       format :json
       prefix :api
 
-      helpers ::ToDoHelpers
+      helpers ::Helpers::ToDoHelpers
 
       resource :todos do
         before { find_item if params[:id] }
