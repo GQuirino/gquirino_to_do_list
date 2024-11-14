@@ -1,9 +1,22 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+ToDo.create([
+  { title: "Buy groceries", description: "Milk, Bread, Eggs, Cheese", status: "pending" },
+  { title: "Read book", description: "Finish reading chapter 5", status: "pending" },
+  { title: "Complete project", description: "Finish the project for the client", status: "pending" },
+  { title: "Call mom", description: "Weekly catch-up call", status: "pending" },
+  { title: "Write blog post", description: "Draft a post on productivity tips", status: "pending" },
+  { title: "Plan vacation", description: "Research destinations and accommodations", status: "pending" },
+  { title: "Visit the bank", description: "Deposit paycheck", status: "pending" },
+  { title: "Attend meeting", description: "Team meeting at 10 AM", status: "pending" },
+  { title: "Grocery shopping", description: "Vegetables and snacks", status: "pending" },
+  { title: "Send email", description: "Follow up with project manager", status: "pending" },
+  { title: "Workout", description: "Go to the gym for an hour", status: "completed" },
+  { title: "Clean room", description: "Organize desk and vacuum the floor", status: "completed" },
+  { title: "Cook dinner", description: "Prepare spaghetti and meatballs", status: "completed" },
+  { title: "Laundry", description: "Wash and fold clothes", status: "completed" },
+  { title: "Pay bills", description: "Electricity and internet bills", status: "completed" },
+  { title: "Water plants", description: "Water indoor and outdoor plants", status: "completed" },
+  { title: "Fix car", description: "Schedule maintenance for oil change", status: "completed" },
+  { title: "Walk the dog", description: "Take the dog for a 30-minute walk", status: "completed" },
+  { title: "Review finances", description: "Go through monthly budget", status: "completed" },
+  { title: "Exercise", description: "Yoga for relaxation", status: "completed" }
+])
