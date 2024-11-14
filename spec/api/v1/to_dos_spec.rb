@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Todo API', type: :request do
   def json_response
-    JSON.parse(response.body)
+    body = JSON.parse(response.body)
+    body['to_dos'] || body['to_do'] || body
   end
 
   let(:status) { :pending }

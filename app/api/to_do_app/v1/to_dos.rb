@@ -19,7 +19,8 @@ module ToDoApp
           optional :filter_by, type: String, values: %w[pending completed], desc: "Filter items by"
         end
         get do
-          ::FilterService.new(ToDo.all, params[:filter_by]).call
+          list = ::FilterService.new(ToDo.all, params[:filter_by]).call
+          serialize(list)
         end
 
         # GET api/v1/todos/:id
@@ -30,7 +31,7 @@ module ToDoApp
           requires :id, type: Integer, desc: "To-do id"
         end
         get ":id" do
-          @todo
+          serialize(@todo)
         end
 
         # POST api/v1/todos
@@ -43,7 +44,8 @@ module ToDoApp
           optional :status, type: String, values: %w[pending complete], default: "pending", desc: "Status of the to-do"
         end
         post do
-          ToDo.create!(declared(params))
+          todo = ToDo.create!(declared(params))
+          serialize(todo)
         end
 
         # PUT api/v1/todos/:id
@@ -58,7 +60,7 @@ module ToDoApp
         end
         put ":id" do
           @todo.update!(declared(params, include_missing: false))
-          @todo
+          serialize(@todo)
         end
 
         # DELETE api/v1/todos/:id
@@ -81,7 +83,7 @@ module ToDoApp
         end
         patch ":id/complete" do
           @todo.completed!
-          @todo
+          serialize(@todo)
         end
       end
     end
