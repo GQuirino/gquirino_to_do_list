@@ -10,6 +10,11 @@ class ToDo < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
 
+  default_scope { order(Arel.sql("CASE
+                            WHEN status='pending' THEN 1
+                            WHEN status='completed' THEN 2
+                          END"))
+  }
   scope :pending, -> { where(status: AVAILABLE_STATUS[:pending]) }
   scope :completed, -> { where(status: AVAILABLE_STATUS[:completed]) }
 end

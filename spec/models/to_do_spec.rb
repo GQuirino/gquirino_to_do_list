@@ -1,78 +1,50 @@
 require 'rails_helper'
 
 RSpec.describe ToDo, type: :model do
-  let(:status) { :pending }
-  let(:title) { "New Title" }
-  let(:description) { "New Description" }
-  let(:to_do_item) { described_class.new(title:, status:, description:) }
-
   describe "validations" do
-    context "#status" do
-      context "with valid status" do
-        subject { to_do_item }
+    it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_presence_of(:status) }
+    it { is_expected.to validate_presence_of(:description) }
+  end
 
-        it "returns true" do
-          expect(subject).to be_valid
-        end
+  describe "scopes" do
+    let!(:to_do_pending) { ToDo.create!(title: 'Item 1', status: 'pending', description: 'New Item to do') }
+    let!(:to_do_completed) { ToDo.create!(title: 'Item 2', status: 'completed', description: 'New Item to do') }
 
-        it "is valid with a status of 'pending'" do
-          status = :pending
-          expect(subject).to be_valid
-        end
+    context "pending" do
+      subject { described_class.pending }
 
-        it "is valid with a status of 'complete'" do
-          status = :complete
-          expect(subject).to be_valid
-        end
+      it "returns pending items" do
+        expect(subject.size).to eq 1
+        is_expected.to include(to_do_pending)
       end
 
-      context "with invalid status" do
-        it "returns false" do
-          status = :invalid_status
-          expect(subject).not_to be_valid
-        end
-
-        it "is not valid without a status" do
-          status = nil
-          expect(subject).not_to be_valid
-          expect(subject.errors[:status]).to include("can't be blank")
-        end
+      it "doe not returns completed items" do
+        expect(subject.size).to eq 1
+        is_expected.to_not include(to_do_completed)
       end
     end
 
-    context "#title" do
-      context "with valid title" do
-        subject { to_do_item }
+    context "completed" do
+      subject { described_class.completed }
 
-        it "returns true" do
-          expect(subject).to be_valid
-        end
+      it "returns completed items" do
+        expect(subject.size).to eq 1
+        is_expected.to include(to_do_completed)
       end
 
-      context "with invalid title" do
-        it "is not valid without a title" do
-          title = nil
-          expect(subject).not_to be_valid
-          expect(subject.errors[:title]).to include("can't be blank")
-        end
+      it "doe not returns pending items" do
+        expect(subject.size).to eq 1
+        is_expected.to_not include(to_do_pending)
       end
     end
 
-    context "#description" do
-      context "with valid description" do
-        subject { to_do_item }
+    context "default_scope" do
+      subject { described_class.all }
 
-        it "returns true" do
-          expect(subject).to be_valid
-        end
-      end
-
-      context "with invalid description" do
-        it "is not valid without a description" do
-          description = nil
-          expect(subject).not_to be_valid
-          expect(subject.errors[:description]).to include("can't be blank")
-        end
+      it "returns items in expected order" do
+        expect(subject.size).to eq 2
+        is_expected.to eq([ to_do_pending, to_do_completed ])
       end
     end
   end

@@ -11,10 +11,10 @@ RSpec.describe FilterService do
       subject { described_class.new(scope, filter_by).call }
 
       it "returns the scope" do
-        expect(subject).to be_an(ActiveRecord::Relation)
+        is_expected.to be_an(ActiveRecord::Relation)
         expect(subject.size).to eq 2
-        expect(subject).to include(to_do_pending)
-        expect(subject).to include(to_do_complete)
+        is_expected.to include(to_do_pending)
+        is_expected.to include(to_do_complete)
       end
     end
 
@@ -26,8 +26,8 @@ RSpec.describe FilterService do
         it "returns the items with pending status" do
           expect(subject.map(&:pending?)).to all(be(true))
           expect(subject.size).to eq 1
-          expect(subject).to include(to_do_pending)
-          expect(subject).to_not include(to_do_complete)
+          is_expected.to include(to_do_pending)
+          is_expected.to_not include(to_do_complete)
         end
       end
 
@@ -38,8 +38,8 @@ RSpec.describe FilterService do
         it "returns the items with completed status" do
           expect(subject.map(&:completed?)).to all(be(true))
           expect(subject.size).to eq 1
-          expect(subject).to include(to_do_complete)
-          expect(subject).to_not include(to_do_pending)
+          is_expected.to include(to_do_complete)
+          is_expected.to_not include(to_do_pending)
         end
       end
     end
