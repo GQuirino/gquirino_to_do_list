@@ -1,0 +1,110 @@
+.App {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.item-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.item.completed h3, .item.completed strike {
+  color: gray;
+  margin: auto 0;
+}
+
+.item.pending {
+  background-color: #e9ecff;
+}
+
+.item.new {
+  background-color: #fffee9;
+}
+
+
+.item.completed {
+  background-color: #dcf5df;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.item-header h3{
+  margin-bottom: 0;
+}
+
+.item-header button{
+  margin: 0;
+  padding: 90;
+}
+
+.item-header input[type='text']{
+  margin: auto;
+  width: 300px;
+}
+
+.item-edit-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.item-edit-form textarea{
+  min-height: fit-content;
+  width: 474px;
+  height: 91px;
+  max-height: 500px;
+  margin: auto;
+}
+
+
+.icon-button {
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+button.complete-button {
+  height: fit-content;
+  margin: auto;
+  margin-right: 0;
+  background-color: #dcf5df;
+}
+
+button.complete-button:hover {
+  background-color: #c1e2c5;
+}
+
+.buttons-container{
+  display: flex;
+}
+
+.buttons-container button{
+  margin: 10px auto 0;
+  padding: 10px 20px;
+}
