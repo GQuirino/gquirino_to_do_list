@@ -10,30 +10,6 @@ module ToDoApp
       resource :todos do
         before { find_item if params[:id] }
 
-        # GET api/v1/todos
-        desc "Get all to-dos list", {
-          success: { code: :ok, message: "Returns all to-do items" },
-          is_array: true
-        }
-        params do
-          optional :filter_by, type: String, values: %w[pending completed], desc: "Filter items by"
-        end
-        get do
-          list = ::FilterService.new(ToDo.all, params[:filter_by]).call
-          serialize(list)
-        end
-
-        # GET api/v1/todos/:id
-        desc "Get a to-do", {
-          success: { code: :ok, message: "Returns a to-do item" }
-        }
-        params do
-          requires :id, type: Integer, desc: "To-do id"
-        end
-        get ":id" do
-          serialize(@todo)
-        end
-
         # POST api/v1/todos
         desc "Create a new to-do", {
           success: { code: :created, message: "Creates a new to-do item" }
