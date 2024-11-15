@@ -1,7 +1,7 @@
 # README
 
-backend: Ruby on Rails, GrapeApi, Rspec, Swagger, Postgres
-<br>API documentation: [Swagger](https://gquirino-kadince-test-29e00dd968dd.herokuapp.com/dist/index.html)
+backend: Ruby on Rails, GrapeApi, Rspec, Swagger, Postgres, GraphQl
+<br>RESTAPI documentation: [Swagger](https://gquirino-kadince-test-29e00dd968dd.herokuapp.com/dist/index.html)
 <br>
 <br>infrastructure: Heroku, CI/CD. (Automatic deploys when CI/CD is succesfull on main branch)
 <br>
