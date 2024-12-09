@@ -130,7 +130,7 @@ GEM
     grape-swagger (2.1.1)
       grape (>= 1.7, < 3.0)
       rack-test (~> 2)
-    graphql (2.4.3)
+    graphql (2.4.7)
       base64
       fiber-storage
     i18n (1.14.6)
